@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS Runner - CTH</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="assets/css/uikit.min.css" />
+    <link rel="stylesheet" href="popup.css" />
+    <script src="assets/js/uikit.min.js"></script>
+    <script src="assets/js/uikit-icons.min.js"></script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="uk-section-primary uk-preserve-color">
+      <div
+        uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent uk-light; top: 200"
+      >
+        <nav class="uk-navbar-container">
+          <div class="uk-container uk-container-expand">
+            <div uk-navbar>
+              <a
+                class="uk-navbar-item uk-logo uk-text-bolder uk-text-emphasis"
+                href="#"
+              >
+                <!-- <img src="icons/32x32.png" alt="Logo" width="32" height="32">&nbsp;  -->
+                <span class="uk-text-middle">JS Runner</span>
+              </a>
+              <ul
+                class="uk-navbar-nav uk-nav"
+                uk-switcher="connect: #component-nav;"
+                id="home_switcher"
+              >
+                <li>
+                  <a href="#">
+                    <span uk-icon="plus"></span>&nbsp;Insert Script
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span uk-icon="file-text"></span>&nbsp;Script
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span uk-icon="happy"></span>&nbsp;About
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <!-- Navbar: END -->
+
+    <!-- Main -->
+    <div class="uk-margin-medium-top">
+      <div class="uk-container uk-container-xlarge">
+        <ul id="component-nav" class="uk-switcher">
+          <!-- Add New Script Tab -->
+          <li>
+            <ul uk-accordion="multiple: true">
+              <li class="uk-open">
+                <a class="uk-accordion-title" href="#">
+                  <span uk-icon="code"></span>
+                  <span>Edit Javascript Editor</span>
+                </a>
+                <div class="uk-accordion-content">
+                  <p>
+                    <div
+                      id="jsEditor"
+                      class="editorNormal"
+                    ></div>
+                  </p>
+                </div>
+              </li>
+              <li class="uk-open">
+                <a class="uk-accordion-title" href="#">
+                  <span uk-icon="settings"></span>
+                  <span>Settings</span>
+                </a>
+                <div class="uk-accordion-content">
+                  <p>
+                    <div class="uk-form-horizontal">
+                      <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">Script Name</label>
+                        <div class="uk-form-controls">
+                          <input class="uk-input" id="scriptName" type="text" placeholder="Enter Script Name">
+                        </div>
+                      </div>
+                      <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">Script Description</label>
+                        <div class="uk-form-controls">
+                          <input class="uk-input" id="scriptDescription" type="text" placeholder="Enter Script Description">
+                        </div>
+                      </div>
+                      <div class="uk-margin">
+                        <input type="hidden" id="isUpdate">
+                        <button class="uk-button uk-button-secondary" id="saveScript">
+                          <span uk-icon="push"></span>
+                          <span class="uk-margin-medium-left">Save</span>
+                        </button>
+                        <button class="uk-button uk-button-primary" id="resetScript">
+                          <span uk-icon="plus"></span>
+                          <span class="uk-margin-medium-left">New Script</span>
+                        </button>
+                      </div>
+                    </div>
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!-- Script Tab -->
+          <li>
+            <div uk-filter="target: .js-filter">
+              <ul class="uk-subnav uk-subnav-pill">
+                <li>
+                  <button class="uk-button uk-button-default uk-padding-remove-top" id="refresh_script_list" uk-tooltip="Reload">
+                    <span uk-icon="refresh"></span>
+                  </button>
+                </li>
+              </ul>
+              <!-- Filter Data -->
+              <ul class="uk-subnav uk-subnav-pill" id="script_filters_li">
+              </ul>
+              <ul
+                class="js-filter uk-child-width-1-2 uk-child-width-1-3@m"
+                uk-grid
+                id="script_list_li"
+              >
+              </ul>
+            </div>
+          </li>
+          <!-- About Tab -->
+          <li>
+            <article class="uk-article">
+              <h1 class="uk-article-title">
+                <a class="uk-link-reset">JS Runner - CTH</a>
+                <span class="uk-label uk-label-danger" id="app_version">V.0.0.1</span>
+              </h1>
+              <p class="uk-article-meta"><strong>C Tech Hindi </strong>provide <strong>JS Runner</strong> for execute real-time javascript code on active tab site with microsoft vs editor.</p>
+              <div class="uk-grid-small uk-child-width-auto" uk-grid>
+                <div>
+                  <a href="https://github.com/ctechhindi" target="_blank" class="uk-icon-button uk-margin-small-right" uk-icon="github"></a>
+                  <a href="https://www.youtube.com/c/CTechHindi" target="_blank" class="uk-icon-button  uk-margin-small-right" uk-icon="youtube"></a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Other Extensions -->
+            <h1 class="uk-heading-line"><span>Extensions</span></h1>
+            <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
+              <!-- Fill Excel Data -->
+              <div>
+                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+                  <div class="uk-card-header">
+                    <div class="uk-grid-small uk-flex-middle" uk-grid>
+                      <div class="uk-width-auto">
+                        <img class="" width="40" height="40" src="assets/images/fill-excel-data-to-form/icon_48.png">
+                      </div>
+                      <div class="uk-width-expand">
+                        <h3 class="uk-card-title uk-margin-remove-bottom">Fill Excel Data</h3>
+                        <p class="uk-text-meta uk-margin-remove-top">
+                          Fill data in HTML form with Excel sheet from Chrome Extension.
+                        </p>
+                      </div>
+                    </div>
+                    <hr class="uk-divider-small">
+                    <ul class="uk-iconnav">
+                      <li><a href="https://github.com/ctechhindi/Fill-Excel-Data-on-HTML-Form" target="_blank" uk-icon="icon: github"></a></li>
+                      <li><a href="https://chrome.google.com/webstore/detail/fill-excel-data/hbdlidnbnmkmbeompcakgedghogdbbkf?hl=en" target="_blank" uk-icon="icon: google"></a></li>
+                      <li><a href="https://youtu.be/i4yHrVASRh4" target="_blank" uk-icon="icon: youtube"></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- form-controller -->
+              <div>
+                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+                  <div class="uk-card-header">
+                    <div class="uk-grid-small uk-flex-middle" uk-grid>
+                      <div class="uk-width-auto">
+                        <img class="" width="40" height="40" src="assets/images/form-controller/48.png">
+                      </div>
+                      <div class="uk-width-expand">
+                        <h3 class="uk-card-title uk-margin-remove-bottom">Form Controller</h3>
+                        <p class="uk-text-meta uk-margin-remove-top">
+                          To upgrade and simplify any html form - Google Chrome Extension
+                        </p>
+                      </div>
+                    </div>
+                    <hr class="uk-divider-small">
+                    <ul class="uk-iconnav">
+                      <li><a href="https://github.com/ctechhindi/Form-Controller-Google-Chrome-Extension" target="_blank" uk-icon="icon: github"></a></li>
+                      <li><a href="https://chrome.google.com/webstore/detail/form-controller/amlkbkafkloafdbohdpaplkimgnpomio?hl=en" target="_blank" uk-icon="icon: google"></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- Advanced Data Scraper -->
+              <div>
+                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+                  <div class="uk-card-header">
+                    <div class="uk-grid-small uk-flex-middle" uk-grid>
+                      <div class="uk-width-auto">
+                        <img class="" width="40" height="40" src="assets/images/Advanced Data Scraper/128x128.png">
+                      </div>
+                      <div class="uk-width-expand">
+                        <h3 class="uk-card-title uk-margin-remove-bottom">Advanced Data Scraper</h3>
+                        <p class="uk-text-meta uk-margin-remove-top">
+                          Advanced Data Scraper extract data from web page with advanced mode and export it as Excel files.
+                        </p>
+                      </div>
+                    </div>
+                    <hr class="uk-divider-small">
+                    <ul class="uk-iconnav">
+                      <li><a href="#" target="_blank" uk-icon="icon: github"></a></li>
+                      <li><a href="#" target="_blank" uk-icon="icon: google"></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Copyright -->
+            <dl class="uk-description-list uk-description-list-divider">
+              <dt><strong>Copyright and License copyright</strong></dt>
+              <dd>Code copyright <span id="currentYear"></span> <strong>ctechhindi</strong>. Code released under the MIT license.</dd>
+            </dl>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="uk-section"></div>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "name": "js-runner-cth",
+  "version": "0.0.1",
+  "description": "Run JavaScript Code in the Chrome Tab Site (Online Sites)",
+  "scripts": {
+    "watch": "cross-env NODE_ENV=development webpack --watch",
+    "build": "cross-env NODE_ENV=production webpack --hide-modules",
+    "build-zip": "npm run build && node scripts/build-zip.js"
+  },
+  "author": "ctechhindi",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-loader": "^8.1.0",
+    "babel-minify": "^0.5.1",
+    "copy-webpack-plugin": "^6.0.3",
+    "cross-env": "^7.0.2",
+    "css-loader": "^4.2.1",
+    "file-loader": "^6.0.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.3",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-extension-reloader": "^1.1.4"
+  },
+  "dependencies": {
+    "archiver": "^5.0.0",
+    "monaco-editor": "^0.20.0",
+    "monaco-editor-webpack-plugin": "^1.9.0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+    "appName": {
+        "message": "JS Runner - CTH"
+    },
+    "appShortName": {
+        "message": "JS Runner - CTH"
+    },
+    "appDescription": {
+        "message": "Run JavaScript Code in the Chrome Tab Site (Online Sites)"
+    }
+}
