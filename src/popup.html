@@ -46,6 +46,11 @@
                 </li>
                 <li>
                   <a href="#">
+                    <span uk-icon="link"></span>&nbsp;Actions
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
                     <span uk-icon="happy"></span>&nbsp;About
                   </a>
                 </li>
@@ -99,6 +104,7 @@
                         </div>
                       </div>
                       <div class="uk-margin">
+                        <input type="hidden" id="isUpdate_Key">
                         <input type="hidden" id="isUpdate">
                         <button class="uk-button uk-button-secondary" id="saveScript">
                           <span uk-icon="push"></span>
@@ -135,6 +141,30 @@
               >
               </ul>
             </div>
+          </li>
+          <!-- Actions Tab -->
+          <li>
+            <div class="uk-clearfix">
+              <div class="uk-float-right">
+                <button class="uk-icon-button uk-button-secondary" id="add_new_action_btn" uk-toggle="target: #add-new-action" uk-icon="plus" uk-tooltip="Add New Action"></button>
+              </div>
+              <div class="uk-float-left">
+                <p class="uk-text-lead"><span uk-icon="link"></span>&nbsp;Actions</p>
+              </div>
+            </div>
+            <table class="uk-table uk-table-striped uk-table-condensed uk-text-nowrap" id="action_table">
+              <thead>
+                <tr>
+                  <th>Sr.No</th>
+                  <th>URL</th>
+                  <th>Match</th>
+                  <th>Value</th>
+                  <th>Active</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="action_table_tr"></tbody>
+            </table>
           </li>
           <!-- About Tab -->
           <li>
@@ -234,6 +264,64 @@
             </dl>
           </li>
         </ul>
+      </div>
+    </div>
+    <!-- Add New Action: MODEL -->
+    <div id="add-new-action" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body">
+        <form>
+          <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Action on Site</legend>
+            <!-- Site Type -->
+            <div class="uk-margin-small">
+              <select class="uk-select uk-form-small" id="site_type">
+                <option value="url">URL</option>
+                <option value="host">Host</option>
+                <option value="path">Path</option>
+              </select>
+            </div>
+            <!-- Site Match Type -->
+            <div class="uk-margin-small">
+              <select class="uk-select uk-form-small" id="site_match_type">
+                <option value="all">All</option>
+                <option value="equal">Equals</option>
+                <!-- <option value="regex">Matches (regex)</option> -->
+              </select>
+            </div>
+            <!-- Site URL -->
+            <div class="uk-margin-small">
+              <input class="uk-input uk-form-small" id="site_url" type="text" placeholder="Enter URL/Host/Path">
+            </div>
+            <!-- Trigger -->
+            <div class="uk-margin-top uk-form-stacked">
+              <label class="uk-form-label" for="form-stacked-text">Trigger</label>
+              <div class="uk-form-controls">
+                <select class="uk-select uk-form-small" id="trigger">
+                  <!-- <option value="manually">Manually</option> -->
+                  <option value="automatically">Automatically</option>
+                </select>
+              </div>
+            </div>
+            <!-- Trigger Type -->
+            <div class="uk-margin-small">
+              <select class="uk-select uk-form-small" id="trigger_type" style="display: none;">
+                <option value="onPage">On Page Load</option>
+                <option value="beforePage">Before Page Load</option>
+              </select>
+            </div>
+            <div class="uk-margin-small uk-form-stacked">
+              <label class="uk-form-label uk-form-small" for="form-stacked-text">Script</label>
+              <div class="uk-form-controls">
+                <select class="uk-select" id="scripts"></select>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <p class="uk-text-right">
+          <input type="hidden" id="action_update_key">
+          <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+          <button class="uk-button uk-button-primary" id="save_action_btn" type="button">Save</button>
+        </p>
       </div>
     </div>
     <div class="uk-section"></div>

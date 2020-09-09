@@ -1,26 +1,25 @@
 import './popup.css'
 import * as monaco from 'monaco-editor'
 const { version } = require('./manifest.json');
-
-export const localKey = {
-  script: "js-runner-script-data"
-}
+import { keys, UIkitNotification, getExtensionKeyData, setExtensionKeyData } from './components/_root'
+import './components/insert_action'
 
 export const store = {
   // Tab Information
   tab: getTabInformation(),
   // Filter Name
   scriptFilters: ["Custom", "System"],
-  // Script Data
-  scriptData: {
+  systemScript: {
     "system-script-1": {
-      "name": "System JS Script",
+      "name": "Welcome to JS Runner",
       "description": "Pre-define javascript script in chrome extension.",
-      "code": "// Pre-Define Javascript Code",
+      "code": "alert('Welcome to CTH - JS Runner')",
       "filter": "System",
       "lastUpdate": "2020-8-13",
     }
   },
+  // Script Data
+  scriptData: {},
 };
 
 export const editor = {
@@ -33,6 +32,7 @@ export const el = {
   homeSwitch: document.getElementById("home_switcher"),
   // New Script Tab
   isUpdate: document.getElementById("isUpdate"),
+  isUpdateKey: document.getElementById("isUpdate_Key"),
   scriptName: document.getElementById("scriptName"),
   scriptDes: document.getElementById("scriptDescription"),
   // Script List
@@ -40,23 +40,6 @@ export const el = {
   scriptList: document.getElementById("script_list_li"),
   // About Tab
   currentYear: document.getElementById("currentYear"),
-}
-
-// UIkit Notification
-export function UIkitNotification(message = "Title", type = "danger", settings = {}) {
-  settings['status'] = type
-  if (!settings['isIcon']) { settings['isIcon'] = true }
-
-  if (!settings['isIcon']) {
-    return UIkit.notification(message, settings);
-  } else {
-    var icon = ""
-    if (type === "danger") { icon = "close" }
-    else if (type === "success") { icon = "check" }
-    else if (type === "warning") { icon = "warning" }
-
-    return UIkit.notification("<span uk-icon='icon: " + icon + "'></span> " + message, settings);
-  }
 }
 
 /**
@@ -133,7 +116,7 @@ export function renderScriptList() {
     const keyName = Object.keys(store.scriptData)[index];
     if (store.scriptData[keyName] !== undefined) {
       var scriptData = store.scriptData[keyName]
-      allHTML += renderScriptList_Template(scriptData)
+      allHTML += renderScriptList_Template(scriptData, keyName)
     }
   }
 
@@ -163,12 +146,13 @@ export function renderScriptList() {
 /**
  * Return HTML Template
  * @param {object} data 
+ * @param {string} key 
  */
-export function renderScriptList_Template(data) {
+export function renderScriptList_Template(data, key) {
   var template = '<li class="tag-' + data.filter.toLocaleLowerCase() + '" data-date="' + data.lastUpdate + '"> \
     <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-card-small uk-light"> \
       <div class="uk-card-badge uk-label" style="'+ ((data.filter !== "System") ? "background-color: deepskyblue; color: white;" : "") + '">' + data.filter + '</div> \
-      <h3 class="uk-card-title">'+ data.name + '</h3> \
+      <h3 class="uk-card-title" title="'+ data.name + '">' + ((data.name.length > 20) ? data.name.substring(0, 20) : data.name) + '</h3> \
       <p>'+ data.description + '</p>';
 
 
@@ -180,8 +164,8 @@ export function renderScriptList_Template(data) {
   } else {
     template += '<hr class="uk-divider-small"> \
       <ul class="uk-iconnav"> \
-        <li><a uk-icon="icon: file-edit" data-name="'+ data.name + '" class="script_list_edit"></a></li> \
-        <li><a uk-icon="icon: trash"  data-name="'+ data.name + '" class="script_list_delete"></a></li> \
+        <li><a uk-icon="icon: file-edit" data-name="'+ key + '" class="script_list_edit"></a></li> \
+        <li><a uk-icon="icon: trash"  data-name="'+ key + '" class="script_list_delete"></a></li> \
       </ul>';
   }
 
@@ -212,61 +196,76 @@ export function saveScriptData() {
     "lastUpdate": todayDate(), // Date Format: 2016-12-13
   }
 
-  if (store.scriptData[el.scriptName.value] === undefined) {
-
+  if (!el.isUpdateKey.value) {
     // Save New Script
-    store.scriptData[el.scriptName.value] = sData
+    // var key = el.scriptName.value.replace(/\s/g,'').toLocaleLowerCase()
+    var key = "custom_script_" + Date.now()
+
+    el.isUpdate.value = 1
+    el.isUpdateKey.value = key
+
+    // Update Script
+    store.scriptData[key] = sData
     UIkitNotification("Your script has been saved.", "success")
 
   } else {
-    // Update New Script
-    if (!el.isUpdate.value) {
-      // Show Confirm Box
-      var is = confirm("Your script already exists, do you want to update it?");
-      if (is) {
+    // Check `isUpdateKey` Key Exists in the Script Object
+    if (store.scriptData[el.isUpdateKey.value] !== undefined) {
+      // Update New Script
+      if (!el.isUpdate.value) {
+        // Show Confirm Box
+        var is = confirm("Your script already exists, do you want to update it?");
+        if (is) {
 
+          UIkit.notification.closeAll()
+
+          store.scriptData[el.isUpdateKey.value] = sData
+          UIkitNotification("Your script has been updated.", "success", { pos: "bottom-right" })
+
+          // Set Update Value in the Input
+          el.isUpdate.value = 1
+        }
+      } else {
         UIkit.notification.closeAll()
 
-        store.scriptData[el.scriptName.value] = sData
+        //  Update Script Without Show Confirm Box
+        store.scriptData[el.isUpdateKey.value] = sData
         UIkitNotification("Your script has been updated.", "success", { pos: "bottom-right" })
-
-        // Set Update Value in the Input
-        el.isUpdate.value = 1
       }
     } else {
-      UIkit.notification.closeAll()
-      
-      //  Update Script Without Show Confirm Box
-      store.scriptData[el.scriptName.value] = sData
-      UIkitNotification("Your script has been updated.", "success", { pos: "bottom-right" })
+      return UIkitNotification("Error Invalid Script Key.", "danger")
     }
   }
 
   // Store Script Data
-  storeScriptData()
+  setScriptData()
+}
+
+
+/**
+ * Get Script Data in the Chrome Local Storage
+ */
+export async function getScriptData() {
+  var out = await getExtensionKeyData(keys.script)
+  if (out === "No Data Found!") {
+    let merged = {...store.scriptData, ...store.systemScript};
+    store.scriptData = merged
+  } else {
+    let merged = {...store.systemScript, ...out};
+    store.scriptData = merged
+  }
+  
+  // Render Script List HTML
+  renderScriptFiltersList()
+  renderScriptList()
 }
 
 /**
- * Store Script Data in the Browser Local Storage
+ * Store Action Data in Local Storage
  */
-export function storeScriptData() {
-  localStorage.setItem(localKey.script, JSON.stringify(store.scriptData))
+ async function setScriptData() {
+  await setExtensionKeyData(keys.script, store.scriptData)
 }
-
-/**
- * Restore Script Data in the Browser Local Storage
- */
-export function restoreScriptData() {
-  var data = localStorage.getItem(localKey.script)
-  if (!data) { return false }
-  data = JSON.parse(data)
-  if (!data) { return false }
-
-  // Set data
-  store.scriptData = data
-}
-
-restoreScriptData()
 
 /**
  * Clear Script Data
@@ -275,6 +274,7 @@ export function clearScriptData() {
   el.scriptName.value = ""
   el.scriptDes.value = ""
   el.isUpdate.value = null
+  el.isUpdateKey.value = ""
   editor.obj.setValue("")
 }
 
@@ -314,6 +314,7 @@ export function scriptEdit(e) {
   var data = store.scriptData[index]
 
   el.isUpdate.value = "1"
+  el.isUpdateKey.value = index
   el.scriptName.value = data.name
   el.scriptDes.value = data.description
   editor.obj.setValue(data.code)
@@ -336,7 +337,7 @@ export function scriptDelete(e) {
   if (is) {
     delete store.scriptData[index];
 
-    storeScriptData()
+    setScriptData()
     refreshScriptList()
   }
 }
@@ -352,9 +353,8 @@ export function todayDate() {
   return yyyy + '-' + mm + '-' + dd;
 }
 
-// Render Script List HTML
-renderScriptFiltersList()
-renderScriptList()
+// Get Script and Render
+getScriptData()
 
 // App Version
 el.appVersion.innerHTML = "V." + version

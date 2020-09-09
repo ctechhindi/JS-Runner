@@ -16,7 +16,7 @@ Run JavaScript Code in the Chrome Tab Site (Online Sites)
 * Change Tab Size
 * Change Font Size
 
-## 📦 [Install Extension]()
+## 📦 [Install Extension](https://chrome.google.com/webstore/detail/js-runner-cth/ohfgciebjhocphgcikdnldicgfhdbllj)
 
 ## Screenshot
 
@@ -51,6 +51,18 @@ Run JavaScript Code in the Chrome Tab Site (Online Sites)
 ### `Processing`
 
 * Run script on page site when reload site 
+
+### V.0.0.2
+
+* Action on Sites
+Run Script if:
+
+- Host/URL/Path
+- Equals/All/Matches (regex)
+- Value (URL)
+
+- Trigger: Manually/Automatically
+- Automatically = Before page load/On Page Load
 
 ### V.0.0.1
 

@@ -1,13 +1,29 @@
 .editorFullScreen {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 100;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
 }
 
 .editorNormal {
-    height: 600px; 
-    border: 1px solid grey;
+  height: 600px;
+  border: 1px solid grey;
+}
+
+/* Uikit Custom CSS */
+
+/* Notification */
+.uk-notification-message.uk-notification-message-success {
+  background-color: #32d296;
+  color: white;
+}
+.uk-notification-message.uk-notification-message-warning {
+  background-color: #e6cca8;
+  color: #443d38;
+}
+.uk-notification-message.uk-notification-message-danger {
+  background-color: #f0506e;
+  color: white;
 }
