@@ -1,7 +1,7 @@
 {
   "name": "js-runner-cth",
-  "version": "0.0.3",
-  "description": "Run JavaScript Code in the Chrome Tab Site (Online Sites)",
+  "version": "0.0.4",
+  "description": "Run JavaScript Code in the Online Sites",
   "scripts": {
     "watch": "cross-env NODE_ENV=development webpack --watch",
     "build": "cross-env NODE_ENV=production webpack --hide-modules",

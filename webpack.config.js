@@ -12,7 +12,7 @@ const config = {
   entry: {
     'background': './background.js',
     'popup': './popup.js',
-    'options/options': './options/options.js',
+    // 'options/options': './options/options.js',
     // /src/content/[name].js
     'scripts/script1': './content/custom-script.js',
   },
@@ -79,7 +79,7 @@ const config = {
         { from: 'assets', to: 'assets' },
         { from: 'fonts', to: 'fonts' },
         { from: 'popup.html', to: 'popup.html' },
-        { from: 'options/options.html', to: 'options/options.html' },
+        // { from: 'options/options.html', to: 'options/options.html' },
         {
           from: 'manifest.json',
           to: 'manifest.json',
@@ -97,7 +97,7 @@ const config = {
       ]
     }),
     new MonacoWebpackPlugin({
-      // languages: []
+      // languages: ["javascript", "html", "handlebars", "scss", "less", "css", "typescript"]
     })
   ]
 };

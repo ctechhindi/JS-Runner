@@ -54,15 +54,12 @@ Run JavaScript Code in the Chrome Tab Site (Online Sites)
 
 ### V.0.0.2
 
-* Action on Sites
-Run Script if:
-
-- Host/URL/Path
-- Equals/All/Matches (regex)
-- Value (URL)
-
-- Trigger: Manually/Automatically
-- Automatically = Before page load/On Page Load
+* Action on Sites, Run Script if:
+  - Host/URL/Path
+  - Equals/All/Matches (regex)
+  - Value (URL)
+  - Trigger: Manually/Automatically
+  - Automatically = Before page load/On Page Load
 
 ### V.0.0.1
 
