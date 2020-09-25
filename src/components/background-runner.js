@@ -76,11 +76,11 @@ async function checkTabIsMatch(action, tab) {
     if (action.siteMatchType === "all" && action.siteUrl === "") {
       await runScript(tab.id, injectScript)
     } else if (["all", "equal"].indexOf(action.siteMatchType) !== -1 && action.siteUrl !== "") {
-      if (action.siteType === "url" && action.siteUrl == tab.url) {
+      if (action.siteType === "url" && action.siteUrl.toLocaleLowerCase() == tab.url.toLocaleLowerCase()) {
         await runScript(tab.id, injectScript)
-      } else if (action.siteType === "host" && action.siteUrl == tabURL.host) {
+      } else if (action.siteType === "host" && action.siteUrl.toLocaleLowerCase() == tabURL.host.toLocaleLowerCase()) {
         await runScript(tab.id, injectScript)
-      } else if (action.siteType === "path" && action.siteUrl == tabURL.pathname) {
+      } else if (action.siteType === "path" && action.siteUrl.toLocaleLowerCase() == tabURL.pathname.toLocaleLowerCase()) {
         await runScript(tab.id, injectScript)
       } else {
         console.error("Site Not Match.", { action: action, open_site: tabURL, })

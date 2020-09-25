@@ -241,7 +241,6 @@ export function saveScriptData() {
   setScriptData()
 }
 
-
 /**
  * Get Script Data in the Chrome Local Storage
  */
@@ -380,7 +379,15 @@ monaco.languages.registerCompletionItemProvider('javascript', {
         },
         {
           label: "for",
-          insertText: "for(var index; index < array.length; index++) {\nvar item = array[index]\n}"
+          insertText: "for (let index = 0; index < array.length; index++) {\n  const element = array[index];\n}"
+        },
+        {
+          label: "foreach",
+          insertText: "array.forEach(function (element) {\n});"
+        },
+        {
+          label: "if",
+          insertText: "if (condition) {\n\n}"
         }
       ]
     };

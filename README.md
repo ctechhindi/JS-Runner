@@ -15,6 +15,7 @@ Run JavaScript Code in the Chrome Tab Site (Online Sites)
 * Full Screen `F11`
 * Change Tab Size
 * Change Font Size
+* Console Log: `Ctrl + Alt + L`
 
 ## 📦 [Install Extension](https://chrome.google.com/webstore/detail/js-runner-cth/ohfgciebjhocphgcikdnldicgfhdbllj)
 
@@ -54,7 +55,10 @@ Run JavaScript Code in the Chrome Tab Site (Online Sites)
 
 ### V.0.0.6
 
-* 
+* Add Custom Suggestion in the JavaScript Language
+  - `alert, log, for, foreach, if`
+* Script Runner Status `OFF/ON` Checkbox
+* Fix URL uppercase and lowercase letter problem.
 
 ### V.0.0.5
 

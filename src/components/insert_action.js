@@ -17,6 +17,7 @@ const el = {
   // Save Button
   saveBtn: document.getElementById("save_action_btn"),
   // Action List
+  actionNF: document.getElementById("action_not_found"),
   actionTable: document.getElementById("action_table"),
   actionTableTr: document.getElementById("action_table_tr"),
 }
@@ -100,7 +101,34 @@ function saveAction() {
   renderAllActions()
   setActionData()
 
+  // Hide
+  el.actionNF.style.display = 'none'
+
   UIkit.modal(document.getElementById("add-new-action")).hide();
+}
+
+/**
+ * Active and De-active Action Data
+ * @param {*} e 
+ */
+async function actionActive(e) {
+  e.preventDefault();
+  if (!this.getAttribute("data-key")) { return false }
+  var index = this.getAttribute("data-key")
+  if (actionData[index] === undefined) { return false }
+
+  if (this.checked === false) {
+    // Update Action Data
+    actionData[index].isActive = false
+    this.checked = false
+  } else {
+    // Update Action Data
+    actionData[index].isActive = true
+    this.checked = true
+  }
+
+  // Save New Action Data
+  setActionData()
 }
 
 /**
@@ -141,7 +169,6 @@ function actionDelete(e) {
   if (!this.getAttribute("data-key")) { return false }
   var index = this.getAttribute("data-key")
   if (actionData[index] === undefined) { return false }
-  var data = actionData[index]
 
   var is = confirm("Are you sure delete this action.")
   if (is) {
@@ -166,7 +193,7 @@ function renderAllActions() {
         <td>'+ action.siteType.toUpperCase() + '</td>\
         <td>'+ action.siteMatchType.toUpperCase() + '</td>\
         <td>'+ action.siteUrl + '</td>\
-        <td></td>\
+        <td><label><input class="uk-checkbox action_table_is_active" type="checkbox" data-key="'+ index + '" '+ ((!action.isActive)? "":"checked") + '></label></td>\
         <td> \
           <ul class="uk-iconnav"> \
             <li><a uk-icon="icon: file-edit" data-key="'+ index + '" class="action_table_edit"></a></li> \
@@ -177,6 +204,15 @@ function renderAllActions() {
     }
 
     el.actionTableTr.innerHTML = table_tr
+
+    // Add Event: Active Checkbox Button
+    var editElm = document.getElementsByClassName("action_table_is_active");
+    if (editElm.length > 0) {
+      for (let i = 0; i < editElm.length; i++) {
+        const element = editElm[i];
+        element.addEventListener('change', actionActive);
+      }
+    }
 
     // Add Event: Edit Button
     var editElm = document.getElementsByClassName("action_table_edit");
@@ -198,6 +234,8 @@ function renderAllActions() {
 
   } else {
     el.actionTable.style.display = 'none'
+    // Show
+    el.actionNF.style.display = 'block'
   }
 }
 
@@ -209,6 +247,8 @@ async function getActionData() {
   if (out === "No Data Found!") {
     // Hide Table
     el.actionTable.style.display = 'none'
+    // Show
+    el.actionNF.style.display = 'block'
   } else {
     actionData = out
     renderAllActions()
