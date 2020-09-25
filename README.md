@@ -52,6 +52,20 @@ Run JavaScript Code in the Chrome Tab Site (Online Sites)
 
 * Run script on page site when reload site 
 
+### V.0.0.6
+
+* 
+
+### V.0.0.5
+
+* Update Plugin:
+  - `npm install monaco-editor@0.21.1`
+  - `monaco-editor-webpack-plugin`
+* Add New Editor Key `Ctrl + Alt + L`, Select JavaScript Variable and this line insert
+  ```
+  console.log("CTH: xPath2", xPath2)
+  ```
+
 ### V.0.0.2
 
 * Action on Sites, Run Script if:

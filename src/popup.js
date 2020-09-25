@@ -248,13 +248,13 @@ export function saveScriptData() {
 export async function getScriptData() {
   var out = await getExtensionKeyData(keys.script)
   if (out === "No Data Found!") {
-    let merged = {...store.scriptData, ...store.systemScript};
+    let merged = { ...store.scriptData, ...store.systemScript };
     store.scriptData = merged
   } else {
-    let merged = {...store.systemScript, ...out};
+    let merged = { ...store.systemScript, ...out };
     store.scriptData = merged
   }
-  
+
   // Render Script List HTML
   renderScriptFiltersList()
   renderScriptList()
@@ -263,7 +263,7 @@ export async function getScriptData() {
 /**
  * Store Action Data in Local Storage
  */
- async function setScriptData() {
+async function setScriptData() {
   await setExtensionKeyData(keys.script, store.scriptData)
 }
 
@@ -365,6 +365,28 @@ document.getElementById("saveScript").addEventListener("click", saveScriptData);
 document.getElementById("resetScript").addEventListener("click", resetScriptForm);
 document.getElementById("refresh_script_list").addEventListener("click", refreshScriptList);
 
+// Add Custom Suggestion: JavaScript Language
+monaco.languages.registerCompletionItemProvider('javascript', {
+  provideCompletionItems: function () {
+    return {
+      suggestions: [
+        {
+          label: "alert",
+          insertText: "alert()"
+        },
+        {
+          label: "log",
+          insertText: "console.log()"
+        },
+        {
+          label: "for",
+          insertText: "for(var index; index < array.length; index++) {\nvar item = array[index]\n}"
+        }
+      ]
+    };
+  }
+});
+
 // Editor
 editor.obj = monaco.editor.create(document.getElementById('jsEditor'), {
   value: ['// Javascript Code'].join('\n'),
@@ -381,6 +403,7 @@ editor.obj = monaco.editor.create(document.getElementById('jsEditor'), {
 editor.obj.addAction({
   id: 'save-file',
   label: 'Save File',
+  // https://microsoft.github.io/monaco-editor/api/classes/monaco.keymod.html
   keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S], // KEY_C, F10
   precondition: null,
   keybindingContext: null,
@@ -410,6 +433,32 @@ editor.obj.addAction({
     if (value !== "") {
       ed.getModel().updateOptions({ tabSize: value })
     }
+  }
+});
+
+// Ctrl + Alt + l = console.log();
+editor.obj.addAction({
+  id: 'console-log',
+  label: 'Console Log',
+  precondition: null,
+  keybindingContext: null,
+  contextMenuGroupId: 'navigation',
+  contextMenuOrder: 1.5,
+  // https://microsoft.github.io/monaco-editor/api/classes/monaco.keymod.html
+  keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyMod.Alt | monaco.KeyCode.KEY_L], // KEY_C, F10
+  run: function (ed) {
+    var selectedText = ed.getModel().getValueInRange(ed.getSelection());
+    if (selectedText.trim().length !== 0) {
+      var selection = ed.getSelection();
+      var range = new monaco.Range(selection.startLineNumber + 1, 0, selection.endLineNumber + 1, 0);
+      var text = "";
+      for (let index = 1; index < selection.selectionStartColumn; index++) {
+        text += " ";
+      }
+      text += 'console.log("CTH: ' + selectedText + '", ' + selectedText + ')';
+      ed.executeEdits("", [{ range: range, text: text + "\n", forceMoveMarkers: true }]);
+    }
+    return null;
   }
 });
 
