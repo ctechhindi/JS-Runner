@@ -27,6 +27,8 @@ Run JavaScript Code in the Chrome Tab Site (Online Sites)
 
 ![](assets/step-3.png)
 
+![](assets/step-3.1.png)
+
 ![](assets/step-4.png)
 
 ## Browser Support
@@ -50,8 +52,6 @@ Run JavaScript Code in the Chrome Tab Site (Online Sites)
 ## Changelog
 
 ### `Processing`
-
-* Run script on page site when reload site 
 
 ### V.0.0.6
 
