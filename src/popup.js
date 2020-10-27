@@ -406,6 +406,26 @@ editor.obj = monaco.editor.create(document.getElementById('jsEditor'), {
   wordWrap: "on",
 });
 
+// ON/OFF wordWrap
+editor.obj.addAction({
+  id: 'word-wrap',
+  label: 'On/Off Word Wrap',
+  // https://microsoft.github.io/monaco-editor/api/classes/monaco.keymod.html
+  keybindings: [monaco.KeyMod.Alt | monaco.KeyCode.KEY_Z], // KEY_C, F10
+  precondition: null,
+  keybindingContext: null,
+  contextMenuGroupId: 'navigation',
+  contextMenuOrder: 1.5,
+  run: function (ed) {
+    // Check WordWrap Option Value
+    if (ed.getRawOptions().wordWrap === "off") {
+      ed.updateOptions({ wordWrap: "on" })
+    } else {
+      ed.updateOptions({ wordWrap: "off" })
+    }
+  }
+});
+
 // Save
 editor.obj.addAction({
   id: 'save-file',
@@ -439,6 +459,23 @@ editor.obj.addAction({
     var value = prompt("Enter Tab Space Value: ", 2);
     if (value !== "") {
       ed.getModel().updateOptions({ tabSize: value })
+    }
+  }
+});
+
+// Change Editor Theme: https://editor.bitwiser.in/
+editor.obj.addAction({
+  id: 'change-theme',
+  label: 'Themes',
+  precondition: null,
+  keybindingContext: null,
+  contextMenuGroupId: 'navigation',
+  contextMenuOrder: 1.5,
+  run: function (ed) {
+    var value = prompt("Enter Theme Name: (vs, vs-dark, hc-black)", "vs");
+    if (value !== "" && ["vs", "vs-dark", "hc-black"].indexOf(value) !== -1) {
+      // Change Editor Theme: vs, vs-dark
+      monaco.editor.setTheme(value)
     }
   }
 });

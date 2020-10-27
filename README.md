@@ -15,7 +15,9 @@ Run JavaScript Code in the Chrome Tab Site (Online Sites)
 * Full Screen `F11`
 * Change Tab Size
 * Change Font Size
-* Console Log: `Ctrl + Alt + L`
+* Insert Console Log: `Ctrl + Alt + L`
+* Word Wrap: `Alt + Z`
+* Beautify JS Code: `Alt + Shift + F`
 
 ## 📦 [Install Extension](https://chrome.google.com/webstore/detail/js-runner-cth/ohfgciebjhocphgcikdnldicgfhdbllj)
 
@@ -52,6 +54,12 @@ Run JavaScript Code in the Chrome Tab Site (Online Sites)
 ## Changelog
 
 ### `Processing`
+
+### V.0.0.7
+
+* Beautify JS Code with Shortcut Key `Alt + Shift + F`
+* Enable and Disable `wordWrap` with Shortcut Key `Alt + Z`
+* Change Editor Theme with `Theme` Option
 
 ### V.0.0.6
 
